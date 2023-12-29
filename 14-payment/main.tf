@@ -24,6 +24,6 @@ module "payment" {
   #listener rule
   alb_listener_arn = data.aws_ssm_parameter.app_alb_listener_arn.value
   rule_priority = 50 # catalogue have 10 already
-  host_header = "payment.app.joindevops.online"
+  host_header = "payment.app.jcglobalit.online"
 
 }

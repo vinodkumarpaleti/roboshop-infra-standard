@@ -24,6 +24,6 @@ module "user" {
   #listener rule
   alb_listener_arn = data.aws_ssm_parameter.app_alb_listener_arn.value
   rule_priority = 20 # catalogue have 10 already
-  host_header = "user.app.joindevops.online"
+  host_header = "user.app.jcglobalit.online"
 
 }

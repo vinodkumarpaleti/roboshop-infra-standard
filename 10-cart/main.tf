@@ -24,6 +24,6 @@ module "cart" {
   #listener rule
   alb_listener_arn = data.aws_ssm_parameter.app_alb_listener_arn.value
   rule_priority = 30 # catalogue have 10, user have 20 already
-  host_header = "cart.app.joindevops.online"
+  host_header = "cart.app.jcglobalit.online"
 
 }

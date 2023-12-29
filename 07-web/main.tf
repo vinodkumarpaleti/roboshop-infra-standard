@@ -24,6 +24,6 @@ module "web" {
   #listener rule
   alb_listener_arn = data.aws_ssm_parameter.web_alb_listener_arn.value
   rule_priority = 10
-  host_header = "joindevops.online"
+  host_header = "jcglobalit.online"
 
 }

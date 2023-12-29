@@ -8,20 +8,20 @@ resource "aws_lb" "web_alb" {
   tags = var.common_tags
 }
 
-resource "aws_acm_certificate" "joindevops" {
-  domain_name       = "joindevops.online"
+resource "aws_acm_certificate" "jcglobalit" {
+  domain_name       = "jcglobalit.online"
   validation_method = "DNS"
   tags = var.common_tags
 }
 
-data "aws_route53_zone" "joindevops" {
-  name         = "joindevops.online"
+data "aws_route53_zone" "jcglobalit" {
+  name         = "jcglobalit.online"
   private_zone = false
 }
 
-resource "aws_route53_record" "joindevops" {
+resource "aws_route53_record" "jcglobalit" {
   for_each = {
-    for dvo in aws_acm_certificate.joindevops.domain_validation_options : dvo.domain_name => {
+    for dvo in aws_acm_certificate.jcglobalit.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
@@ -33,12 +33,12 @@ resource "aws_route53_record" "joindevops" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.joindevops.zone_id
+  zone_id         = data.aws_route53_zone.jcglobalit.zone_id
 }
 
-resource "aws_acm_certificate_validation" "joindevops" {
-  certificate_arn         = aws_acm_certificate.joindevops.arn
-  validation_record_fqdns = [for record in aws_route53_record.joindevops : record.fqdn]
+resource "aws_acm_certificate_validation" "jcglobalit" {
+  certificate_arn         = aws_acm_certificate.jcglobalit.arn
+  validation_record_fqdns = [for record in aws_route53_record.jcglobalit : record.fqdn]
 }
 
 resource "aws_lb_listener" "front_end" {
@@ -46,7 +46,7 @@ resource "aws_lb_listener" "front_end" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.joindevops.arn
+  certificate_arn   = aws_acm_certificate.jcglobalit.arn
 
   default_action {
     type = "fixed-response"
@@ -63,7 +63,7 @@ module "records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "~> 2.0"
 
-  zone_name = "joindevops.online"
+  zone_name = "jcglobalit.online"
 
   records = [
     {
